@@ -101,3 +101,4 @@ pnpm dev
 ## 更多文档
 
 - [architecture.md](./architecture.md) — 项目架构设计说明
+- [CONTRIBUTING.md](./CONTRIBUTING.md) — 贡献指南（分支/提交规范、代码红线、PR 流程）
