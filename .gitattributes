@@ -1,0 +1,40 @@
+# 统一换行符为 LF，避免 Windows / Unix 下 CRLF 差异
+* text=auto eol=lf
+
+# Windows 批处理脚本需要 CRLF 才能正常执行
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# 图片、字体、二进制产物不做换行符转换
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg text
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.pdf binary
+*.jar binary
+*.war binary
+
+# 语言特定配置
+*.java text diff=java
+*.sql text
+*.vue text
+*.ts text
+*.js text
+*.json text
+*.css text
+*.scss text
+*.html text
+*.xml text
+*.yml text
+*.yaml text
+*.md text
+
+# Lock 文件视为生成产物，折叠 diff、不参与统计
+pnpm-lock.yaml -diff linguist-generated
+package-lock.json -diff linguist-generated
