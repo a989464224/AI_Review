@@ -324,7 +324,7 @@ public class PageResult<T> {
 ```yaml
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/memo?useUnicode=true&characterEncoding=utf8mb4
+    url: jdbc:mysql://localhost:3306/memo?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: ${DB_PASSWORD:root}
   jackson:

@@ -2,9 +2,22 @@ spring:
   application:
     name: ai-review
   datasource:
-    url: ${DB_URL:jdbc:mysql://localhost:3306/memo}
+    # characterEncoding 必须是 Java 字符集名（UTF-8），写成 utf8mb4 会被驱动拒绝
+    url: ${DB_URL:jdbc:mysql://localhost:3306/memo?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai}
     username: ${DB_USERNAME:memo}
     password: ${DB_PASSWORD:memo}
+  jackson:
+    time-zone: GMT+8
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+jwt:
+  # 本地开发占位密钥，生产必须通过环境变量注入至少 32 字节的随机串
+  secret: ${JWT_SECRET:dev-only-secret-change-me-please-32bytes}
+  expire-hours: ${JWT_EXPIRE_HOURS:168}
 
 server:
   port: ${SERVER_PORT:8080}
