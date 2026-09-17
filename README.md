@@ -102,3 +102,14 @@ pnpm dev
 
 - [architecture.md](./architecture.md) — 项目架构设计说明
 - [CONTRIBUTING.md](./CONTRIBUTING.md) — 贡献指南（分支/提交规范、代码红线、PR 流程）
+
+## 基础框架运行
+
+```bash
+docker compose -f deploy/docker-compose.yml --env-file deploy/.env.example up -d
+docker run --rm -v "${PWD}/backend:/workspace" -v aireview-maven-cache:/root/.m2 -w /workspace maven:3.9.9-eclipse-temurin-17 mvn spring-boot:run
+npm --prefix frontend install
+npm --prefix frontend run dev
+```
+
+基础框架当前提供后端健康检查、统一 API 响应和异常处理、Vue 应用壳，以及 MySQL 与 Milvus 的本地依赖。账户、笔记、文件、知识库、索引和模型调用将作为后续独立功能交付。
