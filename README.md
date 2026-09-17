@@ -106,10 +106,38 @@ pnpm dev
 ## 基础框架运行
 
 ```bash
+# 1. 启动本地 MySQL 与 Milvus（首次启动会自动建库）
 docker compose -f deploy/docker-compose.yml --env-file deploy/.env.example up -d
+
+# 2. 建表（docs/sql/schema.sql 是唯一建表来源）
+docker exec -i $(docker compose -f deploy/docker-compose.yml ps -q mysql) \
+  mysql -uroot -proot < docs/sql/schema.sql
+
+# 3. 后端
 docker run --rm -v "${PWD}/backend:/workspace" -v aireview-maven-cache:/root/.m2 -w /workspace maven:3.9.9-eclipse-temurin-17 mvn spring-boot:run
+
+# 4. 前端
 npm --prefix frontend install
 npm --prefix frontend run dev
 ```
 
-基础框架当前提供后端健康检查、统一 API 响应和异常处理、Vue 应用壳，以及 MySQL 与 Milvus 的本地依赖。账户、笔记、文件、知识库、索引和模型调用将作为后续独立功能交付。
+已交付：统一 API 响应与异常处理、健康检查、账户注册与登录（JWT + BCrypt）、登录态路由守卫，
+以及 MySQL 与 Milvus 的本地依赖。笔记、文件、知识库、索引和模型调用将作为后续独立功能交付。
+
+## 测试
+
+```bash
+# 后端：JwtUtilTest 等纯单元测试不依赖外部服务；
+# 集成测试默认用 Testcontainers 起 MySQL 容器，
+# 若所在环境无法启动容器，可指向一个已建表的专用测试库：
+TEST_DB_URL='jdbc:mysql://localhost:3307/memo?useUnicode=true&characterEncoding=UTF-8' \
+  TEST_DB_USERNAME=memo TEST_DB_PASSWORD=memo \
+  mvn -f backend/pom.xml test
+
+# 前端
+npm --prefix frontend run test -- --run
+npm --prefix frontend run build
+```
+
+> 集成测试会清空所用库中的业务表，`TEST_DB_URL` 必须指向专用的测试库，不要指向开发库。
+
