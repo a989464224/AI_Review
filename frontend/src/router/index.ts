@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import AppLayout from '../components/layout/AppLayout.vue'
-import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
+import NoteEditView from '../views/NoteEditView.vue'
+import NoteListView from '../views/NoteListView.vue'
+import DocumentListView from '../views/DocumentListView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import { useAuthStore } from '../stores/auth'
 
@@ -12,7 +14,13 @@ const router = createRouter({
       path: '/',
       component: AppLayout,
       meta: { requiresAuth: true },
-      children: [{ path: '', name: 'home', component: HomeView }],
+      children: [
+        { path: '', redirect: { name: 'notes' } },
+        { path: 'notes', name: 'notes', component: NoteListView },
+        { path: 'notes/new', name: 'note-new', component: NoteEditView },
+        { path: 'notes/:id', name: 'note-edit', component: NoteEditView, props: true },
+        { path: 'documents', name: 'documents', component: DocumentListView },
+      ],
     },
     { path: '/login', name: 'login', component: LoginView },
     { path: '/register', name: 'register', component: RegisterView },
@@ -28,7 +36,7 @@ router.beforeEach(async (to) => {
     return { name: 'login', query: { redirect: to.fullPath } }
   }
   if ((to.name === 'login' || to.name === 'register') && auth.isAuthenticated) {
-    return { name: 'home' }
+    return { name: 'notes' }
   }
   return true
 })

@@ -40,10 +40,11 @@ export function setUnauthorizedHandler(handler: () => void): void {
 
 export async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const token = getToken()
+  const isFormData = typeof FormData !== 'undefined' && init?.body instanceof FormData
   const response = await fetch(path, {
     ...init,
     headers: {
-      'Content-Type': 'application/json',
+      ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
       ...(token === null ? {} : { Authorization: `Bearer ${token}` }),
       ...init?.headers,
     },
@@ -65,6 +66,13 @@ export function post<T>(path: string, payload?: unknown): Promise<T> {
 
 export function put<T>(path: string, payload?: unknown): Promise<T> {
   return request<T>(path, { method: 'PUT', body: payload === undefined ? undefined : JSON.stringify(payload) })
+}
+
+export function patch<T>(path: string, payload?: unknown): Promise<T> {
+  return request<T>(path, {
+    method: 'PATCH',
+    body: payload === undefined ? undefined : JSON.stringify(payload),
+  })
 }
 
 export function del<T>(path: string): Promise<T> {
