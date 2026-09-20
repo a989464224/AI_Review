@@ -15,6 +15,10 @@ async function logout() {
   <div class="shell">
     <header class="topbar">
       <RouterLink class="brand" to="/">备忘录</RouterLink>
+      <nav class="nav">
+        <RouterLink to="/notes">笔记</RouterLink>
+        <RouterLink to="/documents">文件</RouterLink>
+      </nav>
       <div class="account">
         <span class="name">{{ auth.user?.nickname ?? auth.user?.username }}</span>
         <button class="btn" type="button" @click="logout">退出</button>
@@ -44,6 +48,9 @@ async function logout() {
   font-weight: 600;
   color: var(--fg);
 }
+.nav { display: flex; gap: 16px; margin-left: auto; margin-right: 24px; }
+.nav a { color: var(--fg-muted); }
+.nav a.router-link-active { color: var(--accent); font-weight: 600; }
 .account {
   display: flex;
   align-items: center;
