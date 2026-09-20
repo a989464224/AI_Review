@@ -40,10 +40,11 @@ export function setUnauthorizedHandler(handler: () => void): void {
 
 export async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const token = getToken()
+  const isFormData = typeof FormData !== 'undefined' && init?.body instanceof FormData
   const response = await fetch(path, {
     ...init,
     headers: {
-      'Content-Type': 'application/json',
+      ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
       ...(token === null ? {} : { Authorization: `Bearer ${token}` }),
       ...init?.headers,
     },

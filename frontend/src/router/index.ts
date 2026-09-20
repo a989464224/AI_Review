@@ -3,6 +3,7 @@ import AppLayout from '../components/layout/AppLayout.vue'
 import LoginView from '../views/LoginView.vue'
 import NoteEditView from '../views/NoteEditView.vue'
 import NoteListView from '../views/NoteListView.vue'
+import DocumentListView from '../views/DocumentListView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import { useAuthStore } from '../stores/auth'
 
@@ -18,6 +19,7 @@ const router = createRouter({
         { path: 'notes', name: 'notes', component: NoteListView },
         { path: 'notes/new', name: 'note-new', component: NoteEditView },
         { path: 'notes/:id', name: 'note-edit', component: NoteEditView, props: true },
+        { path: 'documents', name: 'documents', component: DocumentListView },
       ],
     },
     { path: '/login', name: 'login', component: LoginView },

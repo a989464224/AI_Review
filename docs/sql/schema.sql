@@ -33,3 +33,18 @@ CREATE TABLE IF NOT EXISTS `note` (
   PRIMARY KEY (`id`),
   KEY `idx_user_archived_pinned` (`user_id`, `is_archived`, `is_pinned`, `updated_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='笔记';
+
+-- Markdown 文件
+CREATE TABLE IF NOT EXISTS `document` (
+  `id`              BIGINT       NOT NULL AUTO_INCREMENT,
+  `user_id`         BIGINT       NOT NULL COMMENT '所属用户',
+  `file_name`       VARCHAR(255) NOT NULL COMMENT '原始文件名',
+  `content`         LONGTEXT     NOT NULL COMMENT 'Markdown 文本',
+  `file_size`       BIGINT       NOT NULL COMMENT '字节数',
+  `content_version` INT          NOT NULL DEFAULT 1 COMMENT '内容版本',
+  `index_status`    VARCHAR(16)  NOT NULL DEFAULT 'PENDING' COMMENT '索引状态',
+  `created_at`      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at`      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_document_user_updated` (`user_id`, `updated_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Markdown 文件';
