@@ -133,6 +133,7 @@ async function remove(note: NoteSummary): Promise<void> {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 16px;
   margin-bottom: 16px;
 }
@@ -175,7 +176,12 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 16px;
   margin-top: 20px;
+}
+@media (max-width: 480px) {
+  .head > .btn { width: 100%; text-align: center; }
+  .scopes { flex-wrap: wrap; }
 }
 </style>

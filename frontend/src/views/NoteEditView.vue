@@ -112,12 +112,14 @@ async function save(): Promise<void> {
 .head {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 12px;
   margin-bottom: 16px;
 }
 
 .title {
   flex: 1;
+  min-width: 0;
   padding: 8px 12px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -135,6 +137,7 @@ async function save(): Promise<void> {
 .head-actions {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
@@ -191,5 +194,9 @@ async function save(): Promise<void> {
 .hint {
   margin-top: 12px;
   font-size: 13px;
+}
+@media (max-width: 640px) {
+  .head-actions { width: 100%; justify-content: flex-end; }
+  .editor, .preview { height: 48vh; min-height: 260px; }
 }
 </style>
