@@ -19,6 +19,7 @@ async function logout() {
         <RouterLink to="/notes">笔记</RouterLink>
         <RouterLink to="/documents">文件</RouterLink>
       </nav>
+      <RouterLink class="btn btn-primary create-note" :to="{ name: 'note-new' }">新建笔记</RouterLink>
       <div class="account">
         <span class="name">{{ auth.user?.nickname ?? auth.user?.username }}</span>
         <button class="btn" type="button" @click="logout">退出</button>
@@ -39,7 +40,8 @@ async function logout() {
 .topbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
   padding: 12px 24px;
   border-bottom: 1px solid var(--border);
   background: var(--bg-soft);
@@ -48,7 +50,7 @@ async function logout() {
   font-weight: 600;
   color: var(--fg);
 }
-.nav { display: flex; gap: 16px; margin-left: auto; margin-right: 24px; }
+.nav { display: flex; gap: 16px; margin-left: auto; }
 .nav a { color: var(--fg-muted); }
 .nav a.router-link-active { color: var(--accent); font-weight: 600; }
 .account {
@@ -62,5 +64,12 @@ async function logout() {
 .body {
   flex: 1;
   padding: 24px;
+}
+@media (max-width: 640px) {
+  .topbar { align-items: center; padding: 10px 16px; }
+  .nav { order: 3; width: 100%; margin-left: 0; }
+  .create-note { margin-left: auto; }
+  .name { max-width: 88px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .body { padding: 16px; }
 }
 </style>

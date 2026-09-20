@@ -18,6 +18,8 @@
 
 body {
   margin: 0;
+  min-width: 320px;
+  overflow-x: hidden;
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font);
@@ -67,6 +69,7 @@ input {
   border-radius: var(--radius);
   background: var(--bg);
   color: var(--fg);
+  white-space: nowrap;
 }
 
 .btn-primary {
